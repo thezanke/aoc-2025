@@ -1,5 +1,5 @@
-def solve(input_lines, start_location=50):
-    curr = start_location
+def solve(input_lines, start=50, length=100):
+    curr = start
     z = 0
 
     for line in input_lines:
@@ -8,32 +8,28 @@ def solve(input_lines, start_location=50):
         if direction == "L":
             chng = -chng
 
-        curr = ((curr + chng) % 100 + 100) % 100
+        curr = ((curr + chng) % length + length) % length
         if curr == 0:
             z += 1
 
     return z
 
 
-def solve2(input_lines, start_location=50):
-    curr = start_location
+def solve2(input_lines, start=50, length=100):
+    curr = start
     z = 0
 
     for line in input_lines:
         direction, chng = line[0], int(line[1:])
-        dist = (curr if direction == "L" else 100 - curr) or 100
-        rem = 0
+        dist = (curr if direction == "L" else length - curr) or length
 
         if chng >= dist:
-            z += 1
-            rem = chng - dist
-            if rem > 0:
-                z += rem // 100
+            z += 1 + ((chng - dist) // length)
 
         if direction == "L":
             chng = -chng
 
-        curr = ((curr + chng) % 100 + 100) % 100
+        curr = ((curr + chng) % length + length) % length
 
     return z
 
