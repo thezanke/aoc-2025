@@ -9,10 +9,8 @@ def solve(input: List[str]):
         [n, max_n] = map(int, entry.split("-"))
         while n <= max_n:
             match = re.match(r"^(\d+)\1$", str(n))
-            print(entry, match)
             if match is not None:
                 t += n
-            print(f"t: {t}")
             n += 1
 
     return t
@@ -24,10 +22,8 @@ def solve2(input: List[str]):
         [n, max_n] = map(int, entry.split("-"))
         while n <= max_n:
             match = re.match(r"^(\d+)\1+$", str(n))
-            print(entry, match)
             if match is not None:
                 t += n
-            print(f"t: {t}")
             n += 1
 
     return t
