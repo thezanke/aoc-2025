@@ -49,11 +49,11 @@ def solve_battery_array(arr: list[int]) -> int:
     return arr[p1] * 10 + arr[p2]
 
 
-def solve_part_1(input: list[list[int]]) -> int:
-    return sum([solve_battery_array(line) for line in input])
+def solve_part_1(arr_list: list[list[int]]) -> int:
+    return sum([solve_battery_array(line) for line in arr_list])
 
 
-def solve_part_2(input: list[list[int]]) -> int:
+def solve_part_2(arr_list: list[list[int]]) -> int:
     pass
 
 
