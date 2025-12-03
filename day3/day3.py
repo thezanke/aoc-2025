@@ -1,39 +1,25 @@
-import pytest
-
-
 def solve_battery_array(arr: list[int], d=2) -> int:
     t = 0
-
-    print(f"Solving for array: {arr}")
-
     x = 0
 
     while d > 0:
         while x < len(arr) - d:
-            print(f"x[{d}]: {x}, value: {arr[x]}")
-
             if arr[x] == 9:
                 break
 
             found = False
             for i in range(x + 1, len(arr) - d + 1):
-                print(f"i: {i}, value: {arr[i]}")
-
                 if arr[x] < arr[i]:
-                    print(f"Found {arr[i]} is larger than {arr[x]}")
                     x = i
                     found = True
                     break
 
             if not found:
-                print("No larger value found for x, breaking")
                 break
 
         t += arr[x] * 10 ** (d - 1)
-        d -= 1
         x += 1
-
-        print(f"total: {t}, remaining digits: {d}")
+        d -= 1
 
     return t
 
