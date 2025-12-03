@@ -79,12 +79,14 @@ def test_example_arr_3():
 def test_example_arr_4():
     assert solve_battery_array(input_example[3]) == 92
 
+
 def test_solve_example():
     assert solve_part_1(input_example) == 357
 
 
 def test_solve_final():
     assert solve_part_1(input_final) == 17403
+
 
 def test_example_arr_1_part2():
     assert solve_battery_array(input_example[0], 12) == 987654321111
