@@ -16,23 +16,39 @@ def get_neighbors(grid: list[list[str]], pos: tuple[int, int]):
     return neighbors
 
 
-def solve_part_1(arr_list: list[list[int]]) -> int:
+def solve_part_1(grid: list[list[int]]) -> int:
     t = 0
-    for r in range(len(arr_list)):
-        for c in range(len(arr_list[0])):
-            if arr_list[r][c] != "@":
+    for r in range(len(grid)):
+        for c in range(len(grid[0])):
+            if grid[r][c] != "@":
                 continue
             pos = (r, c)
-            neighbors = get_neighbors(arr_list, pos)
+            neighbors = get_neighbors(grid, pos)
             if len(neighbors) < 4:
                 t += 1
-            print("Position:", pos)
-            print(neighbors)
     return t
 
 
-def solve_part_2(arr_list: list[list[int]]) -> int:
-    pass
+def solve_part_2(grid: list[list[int]], t=0) -> int:
+    did_update = False
+
+    for r in range(len(grid)):
+        for c in range(len(grid[0])):
+            if grid[r][c] != "@":
+                continue
+
+            pos = (r, c)
+            neighbors = get_neighbors(grid, pos)
+
+            if len(neighbors) < 4:
+                t += 1
+                grid[r][c] = "x"
+                did_update = True
+
+    if did_update:
+        return solve_part_2(grid, t)
+
+    return t
 
 
 ###
@@ -61,11 +77,9 @@ def test_part_1_final_solution():
     assert solve_part_1(input_final) == 1411
 
 
-@pytest.mark.skip(reason="not implemented")
 def test_part_2_example_solution():
-    assert solve_part_2(input_example) == False
+    assert solve_part_2(input_example) == 43
 
 
-@pytest.mark.skip(reason="not implemented")
 def test_part_2_final_solution():
-    assert solve_part_2(input_final) == False
+    assert solve_part_2(input_final) == 8557
