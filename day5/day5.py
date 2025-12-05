@@ -1,6 +1,3 @@
-import pytest
-
-
 def solve_part_1(puzzle_input: tuple[list[range], list[int]]) -> int:
     [ranges, ingredients] = puzzle_input
 
