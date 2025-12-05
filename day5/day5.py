@@ -46,22 +46,20 @@ def get_input(file_path):
 
         return [ranges, ingredients]
 
+input_example = get_input("day5/example.txt")
+input_final = get_input("day5/input.txt")
 
 def test_part_1_example_solution():
-    input_example = get_input("day5/example.txt")
     assert solve_part_1(input_example) == 3
 
 
 def test_part_1_final_solution():
-    input_final = get_input("day5/input.txt")
     assert solve_part_1(input_final) == 635
 
 
 def test_part_2_example_solution():
-    input_example = get_input("day5/example.txt")
     assert solve_part_2(input_example) == 14
 
 
 def test_part_2_final_solution():
-    input_final = get_input("day5/input.txt")
     assert solve_part_2(input_final) == 369761800782619
