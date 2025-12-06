@@ -1,42 +1,41 @@
 import re
-import pytest
+
+
+def parse_input(lines: list[str]):
+    header = lines.pop(-1)
+
+    problems = [
+        (match.group().strip(), match.span(), [])
+        for match in re.finditer(r"(\S\s+)[\s$]", header)
+    ]
+
+    for line in lines:
+        for prob in problems:
+            [_, (start, end), num_list] = prob
+            value = line[start:end]
+            if value:
+                num_list.append(value)
+
+    return problems
 
 
 def solve_part_1(
-    input: tuple[list[tuple[str, tuple[int, int], list[list[str]]]], list[str]],
+    problems: tuple[list[tuple[str, tuple[int, int], list[list[str]]]]],
 ) -> int:
-    cols, lines = input
-
-    for line in lines:
-        for col in cols:
-            span = col[1]
-            value = line[span[0] : span[1]]
-            if value:
-                col[2].append(value)
-
     t = 0
-    for col in cols:
-        t += eval(col[0].join(col[2]))
+    for op, _, num_list in problems:
+        t += eval(op.join(num_list))
 
     return t
 
 
 def solve_part_2(
-    input: tuple[list[tuple[str, tuple[int, int], list[list[str]]]], list[str]],
+    problems: tuple[list[tuple[str, tuple[int, int], list[list[str]]]]],
 ) -> int:
-    problems, lines = input
     t = 0
-
-    for p in problems:
-        span = p[1]
-        for line in lines:
-            value = line[span[0] : span[1]]
-            if value:
-                value = list(value)
-                value.reverse()
-                p[2].append(value)
-        rotated = ["".join(row).strip() for row in list(zip(*p[2]))[::-1]]
-        t += eval(p[0].join(filter(None, rotated)))
+    for op, _, num_list in problems:
+        rotated = ["".join(r).strip() for r in list(zip(*map(list, num_list)))[::-1]]
+        t += eval(op.join(filter(None, rotated)))
 
     return t
 
@@ -48,13 +47,7 @@ def solve_part_2(
 
 def get_input(file_path):
     with open(file_path, "r") as file:
-        lines = file.read().splitlines()
-        header = lines.pop(-1)
-        problems = []
-        iter = re.finditer(r"(\S\s+)[\s$]", header)
-        for match in iter:
-            problems.append((match.group().strip(), match.span(), []))
-        return (problems, lines)
+        return parse_input(file.read().splitlines())
 
 
 def test_part_1_example_solution():
