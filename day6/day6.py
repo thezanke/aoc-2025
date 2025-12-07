@@ -6,7 +6,7 @@ def parse_input(lines: list[str]):
 
     problems = [
         (match.group().strip(), match.span(), [])
-        for match in re.finditer(r"(\S\s+)[\s$]", header)
+        for match in re.finditer(r"(\S\s+)(\s\S|$)", header)
     ]
 
     for line in lines:
@@ -34,8 +34,7 @@ def solve_part_2(
 ) -> int:
     t = 0
     for op, _, num_list in problems:
-        rotated = ["".join(r).strip() for r in zip(*map(list, num_list))]
-        t += eval(op.join(filter(None, rotated)))
+        t += eval(op.join(filter(None, ["".join(r).strip() for r in zip(*num_list)])))
 
     return t
 
