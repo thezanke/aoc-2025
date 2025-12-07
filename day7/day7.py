@@ -37,22 +37,32 @@ def solve_part_2(lines: list[list[str]]) -> int:
                 else:
                     b[ii] = "|"
 
-    def solve_recursively(lines: list[list[str]], ret, li, pos):
-        if pos == -1 or pos == len(lines[li]) or lines[li][pos] != "|":
-            return 0
+    cache: dict[tuple[int, int], int] = {}
 
-        if li + 2 == len(lines):
-            return 1
+        
+    def solve_recursively(lines: list[list[str]], x, y=0):
+        if (x, y) in cache:
+            return cache[(x, y)]
 
+        v: int = 0
+        if y >= len(lines):
+            v += 1
+        elif lines[y][x] == "|" or lines[y][x] == "S":
+            v += solve_recursively(lines, x, y + 1)
+        elif lines[y][x] == "^":
+            v += solve_recursively(lines, x - 1, y + 1) + solve_recursively(
+                lines, x + 1, y + 1
+            )
 
-        return solve_recursively(lines, ret, li + 1, pos - 1) + solve_recursively(
-            lines, ret, li + 1, pos + 1
-        )
+        cache[(x, y)] = v
 
-    filtered = [line for line in lines if not any(c == "^" for c in line)]
-    header = filtered.pop(0)
+        return v
 
-    return solve_recursively(filtered, {"total": 0}, 0, header.index("S"))
+        
+
+    t = solve_recursively(lines, lines[0].index("S"))
+
+    return t
 
 
 ###
@@ -82,4 +92,4 @@ def test_part_2_example_solution():
 
 def test_part_2_final_solution():
     input_final = get_input("day7/input.txt")
-    assert solve_part_2(input_final) == 40
+    assert solve_part_2(input_final) == 10733529153890
