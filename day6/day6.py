@@ -6,7 +6,7 @@ def parse_input(lines: list[str]):
 
     problems = [
         (match.group().strip(), match.span(), [])
-        for match in re.finditer(r"(\S\s+)(\s\S|$)", header)
+        for match in re.finditer(r"(\S\s+)[\s$]", header)
     ]
 
     for line in lines:
